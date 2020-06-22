@@ -1,5 +1,5 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 import './Button.css';
 
@@ -11,7 +11,6 @@ const Button = ({ onClick }) => (
 
 export default Button;
 
-// ImageGalleryItem.propTypes = {
-//   tags: PropTypes.string.isRequired,
-//   webformatURL: PropTypes.string.isRequired,
-// };
+Button.propTypes = {
+  onClick: PropTypes.func.isRequired,
+};

@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import './Searchbar.css';
+import { INITIAL_STATE_GALLERY } from '../helpers/constants';
 
-const INITIAL_STATE_GALLERY = {
-  query: '',
-};
+import './Searchbar.css';
 
 export default class Searchbar extends Component {
   state = {
-    query: '',
+    ...INITIAL_STATE_GALLERY,
   };
 
   handleInputChange = ({ target }) => {

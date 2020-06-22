@@ -4,18 +4,12 @@ import Searchbar from './Searchbar/Searchbar';
 import ImageGallery from '../componets/ImageGallery/ImageGallery';
 import Loader from './Loader/Loader';
 import Button from './Button/Button';
+import Modal from './Modal/Modal';
 
 import articlesApi from '../services/articlesAPI';
+import { INITIAL_STATE_SEARCHBAR } from './helpers/constants';
 
 import './App.css';
-
-const INITIAL_STATE_SEARCHBAR = {
-  articles: [],
-  loading: false,
-  error: null,
-  query: '',
-  page: 1,
-};
 
 class App extends Component {
   state = {
@@ -60,17 +54,36 @@ class App extends Component {
     this.setState({ query, page: 1, articles: [] });
   };
 
+  openModal = e => {
+    const { name } = e.target.dataset;
+
+    this.setState(state => ({
+      showModal: !state.showModal,
+      largeImageURL: name,
+    }));
+  };
+
+  closeModal = e => {
+    this.setState(state => ({
+      showModal: !state.showModal,
+    }));
+  };
+
   render() {
-    const { articles, loading, error } = this.state;
+    const { articles, loading, error, showModal, largeImageURL } = this.state;
     return (
       <>
         {error && <p>Somthing went wrong:{error.message}</p>}
-
         <Searchbar onSubmit={this.handleSearchFormSubmit} />
-        {articles.length > 0 && <ImageGallery data={articles} />}
+        {articles.length > 0 && (
+          <ImageGallery data={articles} openModal={this.openModal} />
+        )}
         {loading && <Loader />}
         {articles.length > 0 && !loading && (
           <Button onClick={this.fetchArticles} />
+        )}
+        {showModal && (
+          <Modal imgUrl={largeImageURL} closeModal={this.closeModal} />
         )}
       </>
     );
