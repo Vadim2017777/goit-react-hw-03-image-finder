@@ -8,8 +8,8 @@ export default class Modal extends Component {
     window.addEventListener('keydown', this.handleKeyDown);
   }
 
-  handleClick = event => {
-    if (event.currentTarget === event.target) {
+  handleClick = ({ currentTarget, target }) => {
+    if (currentTarget === target) {
       this.props.closeModal();
     }
   };
@@ -18,8 +18,8 @@ export default class Modal extends Component {
     window.removeEventListener('keydown', this.handleKeyDown);
   }
 
-  handleKeyDown = e => {
-    if (e.code === 'Escape' || e.target) {
+  handleKeyDown = ({ target, code }) => {
+    if (code === 'Escape' || target) {
       this.props.closeModal();
     }
   };

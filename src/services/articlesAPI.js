@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-const fetchArticlesWithQuery = (searchQuery, page = 1) => {
+import { baseUrl, API_KEY } from '../componets/helpers/constants';
+
+const fetchArticlesWithQuery = (searchQuery, page = 1, handleLoadningState) => {
   return axios
-    .get(
-      `https://pixabay.com/api/?image_type=photo&orientation=horizontal&q=${searchQuery}&page=${page}&per_page=12&key=16237149-31f8128048fb3bf9af47cfac8`,
-    )
+    .get(`${baseUrl}q=${searchQuery}&page=${page}&per_page=12&key=${API_KEY}`)
     .then(response => response.data.hits);
 };
 

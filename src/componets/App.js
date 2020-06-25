@@ -71,17 +71,17 @@ class App extends Component {
 
   render() {
     const { articles, loading, error, showModal, largeImageURL } = this.state;
+    const showArticles = articles.length;
+    const showButton = articles.length;
     return (
       <>
         {error && <p>Somthing went wrong:{error.message}</p>}
         <Searchbar onSubmit={this.handleSearchFormSubmit} />
-        {articles.length > 0 && (
+        {showArticles > 0 && (
           <ImageGallery data={articles} openModal={this.openModal} />
         )}
         {loading && <Loader />}
-        {articles.length > 0 && !loading && (
-          <Button onClick={this.fetchArticles} />
-        )}
+        {showButton > 0 && !loading && <Button onClick={this.fetchArticles} />}
         {showModal && (
           <Modal imgUrl={largeImageURL} closeModal={this.closeModal} />
         )}
