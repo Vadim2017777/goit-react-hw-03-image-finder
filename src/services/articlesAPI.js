@@ -2,12 +2,20 @@ import axios from 'axios';
 
 import { baseUrl, API_KEY } from '../componets/helpers/constants';
 
-const fetchArticlesWithQuery = (searchQuery, page = 1, handleLoadningState) => {
+const articlesApi = (objApp, handleLoadningState) => {
+  const { query, page } = objApp.state;
+  handleLoadningState();
   return axios
-    .get(`${baseUrl}q=${searchQuery}&page=${page}&per_page=12&key=${API_KEY}`)
-    .then(response => response.data.hits);
+    .get(`${baseUrl}q=${query}&page=${page}&per_page=12&key=${API_KEY}`)
+    .then(response => response.data.hits)
+    .then(articles =>
+      objApp.setState(prevState => ({
+        articles: [...prevState.articles, ...articles],
+        page: prevState.page + 1,
+      })),
+    )
+    .catch(error => objApp.setState({ error }))
+    .finally(() => objApp.setState({ loading: false }));
 };
 
-export default {
-  fetchArticlesWithQuery,
-};
+export default articlesApi;

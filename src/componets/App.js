@@ -34,20 +34,14 @@ class App extends Component {
     }
   }
 
-  fetchArticles = () => {
-    const { query, page } = this.state;
+  handleLoadningState = () => {
     this.setState({ loading: true });
+  };
 
-    articlesApi
-      .fetchArticlesWithQuery(query, page)
-      .then(articles =>
-        this.setState(prevState => ({
-          articles: [...prevState.articles, ...articles],
-          page: prevState.page + 1,
-        })),
-      )
-      .catch(error => this.setState({ error }))
-      .finally(() => this.setState({ loading: false }));
+  fetchArticles = () => {
+    const objApp = this;
+
+    articlesApi(objApp, this.handleLoadningState);
   };
 
   handleSearchFormSubmit = query => {
