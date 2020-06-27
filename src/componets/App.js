@@ -39,9 +39,7 @@ class App extends Component {
   };
 
   fetchArticles = () => {
-    const objApp = this;
-
-    articlesApi(objApp, this.handleLoadningState);
+    articlesApi(this);
   };
 
   handleSearchFormSubmit = query => {
